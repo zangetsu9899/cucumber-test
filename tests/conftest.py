@@ -1,12 +1,15 @@
 import requests
 import pytest
+from config import SESSION, APP_URL, ADMIN_USERNAME, ADMIN_PASSWORD, LOG
 
 
 @pytest.fixture(scope="session")
 def login_as_admin():
     # Auth
-    payload = {"username": "admin", "password": "admin"}
-    response = requests.post('http://localhost:8080/auth/login', data=payload)
+    LOG.info('login_as_admin()')
+    payload = {"username": ADMIN_USERNAME, "password": ADMIN_PASSWORD}
+    LOG.debug(f'Login payload: {payload}')
+    response = SESSION.post(f'{APP_URL}/auth/login', data=payload)
     assert response.ok
 
     # Extract token

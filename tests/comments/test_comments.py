@@ -1,9 +1,12 @@
 import requests
 from lib.utils import build_request_header
+from lib.comments import Comments
+from config import APP_URL, LOG
 
 
 def test_get_all_comments(login_as_admin):
     # Get comments
-    request_header = build_request_header(login_as_admin)
-    response = requests.get('http://localhost:8080/comments/', headers=request_header)
+    LOG.info('test_get_all_comments()')
+    response = Comments().get_all_comments(APP_URL, login_as_admin)
+    LOG.debug(response.json())
     assert response.ok
